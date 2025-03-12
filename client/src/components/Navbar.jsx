@@ -7,9 +7,11 @@ import { FaUser } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
 import avatar from "../assets/avatar.png";
+import { useSelector } from "react-redux";
 const Navbar = () => {
-  const current_user = true;
+  const current_user = false;
   const [isDropDown, setIsDropDown] = React.useState(false);
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   const navigation = [
     { name: "Dashboard", href: "/dashboard" },
@@ -75,7 +77,9 @@ const Navbar = () => {
             className="bg-yellow-500 p-1 sm:px-6 py-2 flex items-center rounded-sm"
           >
             <FaShoppingCart className="size-6" />
-            <span className="text:sm font-semibold sm:ml-1">0</span>
+            <span className="text:sm font-semibold sm:ml-1">
+              {cartItems.length > 0 ? `${cartItems.length}` : "0"}
+            </span>
           </Link>
         </div>
       </nav>

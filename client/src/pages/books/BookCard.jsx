@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { FiShoppingCart } from "react-icons/fi";
-import { getImgUrl } from "../../utils/getImgUrl";
+import { getBooksImgUrl } from "../../utils/getImgUrl";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
 const BookCard = (book) => {
   //   console.log(book.book._id);
+  const dispatch = useDispatch();
 
   return (
     <div className="rounded-lg transition-shadow duration-300 border-none">
@@ -13,7 +16,7 @@ const BookCard = (book) => {
         <div className="sm:h-72 sm:flex-shrink-0 border rounded-md border-none">
           <Link to={`/book/${book.book._id}`}>
             <img
-              src={`${getImgUrl(book.book.coverImage)}`}
+              src={`${getBooksImgUrl(book.book.coverImage)}`}
               alt=""
               className="w-full bg-cover p-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-200"
             />
@@ -37,7 +40,11 @@ const BookCard = (book) => {
               ${book.book.oldPrice}
             </span>
           </p>
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded space-x-1 flex items-center gap-1 ">
+          <button
+            type="button"
+            onClick={() => dispatch(addToCart(book.book))}
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded space-x-1 flex items-center gap-1 cursor-pointer"
+          >
             <FiShoppingCart className="" />
             <span>Add to Cart</span>
           </button>
