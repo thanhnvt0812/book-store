@@ -33,14 +33,14 @@ const Navbar = () => {
             <GiBookshelf className="size-8" />
           </Link>
           {/* search input */}
-          <div className="relative sm:w-72 w-40 space-x-2">
+          {/* <div className="relative sm:w-72 w-40 space-x-2">
             <IoIosSearch className="absolute inline-block left-3 inset-y-2" />
             <input
               type="text"
               placeholder="Search..."
               className="bg-[#EAEAEA] w-full py-1 md:px-8 pxx-6 rounded-md focus:outline-none"
             />
-          </div>
+          </div> */}
         </div>
         {/* right side */}
         <div className="relative flex items-center md:space-x-3 space-x-2">
@@ -76,9 +76,9 @@ const Navbar = () => {
           )}
 
           {/* <FaUser className="size-6" /> */}
-          <button className="hidden sm:block">
+          {/* <button className="hidden sm:block">
             <MdFavorite className="size-6" />
-          </button>
+          </button> */}
           <Link
             to={"/cart"}
             className="bg-yellow-500 p-1 sm:px-6 py-2 flex items-center rounded-sm"
