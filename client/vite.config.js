@@ -16,7 +16,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: "esnext", // Sửa lỗi không tương thích
+      target: "esnext", // Fix lỗi không tương thích
     },
   },
 });
