@@ -9,7 +9,10 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://book-store-production-9863.up.railway.app",
+    ],
     credentials: true,
   })
 );
