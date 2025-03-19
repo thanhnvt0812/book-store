@@ -3,26 +3,49 @@ import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [state, setState] = useState("Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const { registerUser, loginUser, signInWithGoogle } = useAuth();
 
+  const navigate = useNavigate();
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (state === "Sign Up") {
-      console.log("Sign Up" + email + ", " + password);
+      //register user
+      // console.log("Sign Up: " + email + ", " + password);
+      try {
+        await registerUser(email, password);
+        alert("Account created successfully");
+        navigate("/");
+      } catch (error) {
+        setMessage("Something went wrong!!! Please try again later");
+        console.log(error);
+      }
     } else {
-      console.log("Login" + email + ", " + password);
+      // console.log("Login" + email + ", " + password);
+      try {
+        await loginUser(email, password);
+        alert("Login successfully");
+        navigate("/");
+      } catch (error) {
+        setMessage("Something went wrong!!! Please try again later");
+        // console.log(error);
+      }
     }
   };
   const handleGoogle = async (e) => {
     e.preventDefault();
-    if (state === "Sign Up") {
-      console.log("Google Sign Up");
-    } else {
-      console.log("Google Login");
+    try {
+      await signInWithGoogle();
+      alert("Login Successfully");
+      navigate("/");
+    } catch (error) {
+      setMessage("Something went wrong!!! Please try again later");
     }
   };
 
@@ -48,7 +71,7 @@ const Login = () => {
               type="email"
               placeholder="Your Email Address"
               required
-              className="bg-transparent outline-none"
+              className="bg-transparent outline-none w-full"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
@@ -65,11 +88,14 @@ const Login = () => {
               type="password"
               placeholder="Your Password"
               required
-              className="bg-transparent outline-none"
+              className="bg-transparent outline-none w-full"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
           </div>
+          {message && (
+            <p className="text-red-500 text-xs italic mb-3">{message}</p>
+          )}
           <button className="w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium cursor-pointer">
             {state === "Sign Up" ? "Sign Up" : "Login"}
           </button>
@@ -101,9 +127,7 @@ const Login = () => {
             className="w-full flex flex-wrap gap-1 items-center justify-center bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none"
           >
             <FaGoogle className="mr-2" />
-            {state === "Sign Up"
-              ? "Sign Up with Google"
-              : "Sign in with Google"}
+            Sign in with Google
           </button>
         </div>
       </div>

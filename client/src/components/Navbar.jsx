@@ -8,17 +8,21 @@ import { MdFavorite } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
 import avatar from "../assets/avatar.png";
 import { useSelector } from "react-redux";
+import { useAuth } from "../context/AuthContext";
 const Navbar = () => {
-  const current_user = false;
   const [isDropDown, setIsDropDown] = React.useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
-
+  const { user, logout } = useAuth();
   const navigation = [
-    { name: "Dashboard", href: "/dashboard" },
+    { name: "Dashboard", href: "/" },
     { name: "Orders", href: "/orders" },
     { name: "Cart Page", href: "/cart" },
     { name: "Check Out", href: "/checkout" },
   ];
+  // const user = false;
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <header className="max-w-screen-2xl mx-auto px-4 py-6">
@@ -40,7 +44,7 @@ const Navbar = () => {
         </div>
         {/* right side */}
         <div className="relative flex items-center md:space-x-3 space-x-2">
-          {current_user ? (
+          {user ? (
             <div className="relative group ">
               <button onClick={() => setIsDropDown(!isDropDown)}>
                 <img
@@ -60,6 +64,9 @@ const Navbar = () => {
                     </Link>
                   </li>
                 ))}
+                <li className="block px-4 py-2 text-sm hover:bg-gray-300">
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
               </ul>
             </div>
           ) : (

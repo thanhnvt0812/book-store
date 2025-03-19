@@ -8,10 +8,11 @@ import { clearCart, removeFromCart } from "../../redux/features/cart/cartSlice";
 const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
 
+  console.log(cartItems);
   const dispatch = useDispatch();
-  const totalPrice = cartItems
-    .reduce((acc, item) => acc + item.newPrice, 0)
-    .toFixed(2);
+  const totalPrice = cartItems.length
+    ? cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2)
+    : "0.00";
   return (
     <div className="flex mt-12 h-full flex-col overflow-hidden bg-white shadow-xl">
       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">

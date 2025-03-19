@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 // import required modules
 import { Pagination } from "swiper/modules";
 import { Navigation } from "swiper/modules";
+import { useGetBooksQuery } from "../../redux/features/books/booksApi";
 
 const TopSales = () => {
   const categories = [
@@ -20,13 +21,11 @@ const TopSales = () => {
     "Horror",
     "Adventure",
   ];
-  const [books, setBooks] = useState([]);
+  // const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
-  useEffect(() => {
-    fetch("book.json")
-      .then((res) => res.json())
-      .then((data) => setBooks(data));
-  }, []);
+
+  const { data: books = [] } = useGetBooksQuery();
+
   const filteredBooks =
     selectedCategory === "Choose a genre"
       ? books.filter((book) => book.trending == true)

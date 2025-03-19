@@ -1,0 +1,83 @@
+/* eslint-disable no-unused-vars */
+import { Bar } from "react-chartjs-2";
+import { React, useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const RevenueChart = () => {
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  useEffect(() => {
+    const fetchRevenueData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/revenue"); // API backend
+        const { labels, revenueData } = response.data;
+
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: "Revenue (USD)",
+              data: revenueData,
+              backgroundColor: "rgba(34, 197, 94, 0.7)",
+              borderColor: "rgba(34, 197, 94, 1)",
+              borderWidth: 1,
+            },
+          ],
+        });
+      } catch (error) {
+        console.error("Error fetching revenue data:", error);
+      }
+    };
+
+    fetchRevenueData();
+  }, []);
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  return (
+    <div className="w-full max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">
+        Weekly Revenue
+      </h2>
+      <div className="hidden md:block">
+        <Bar data={chartData} options={options} className="" />
+      </div>
+    </div>
+  );
+};
+
+export default RevenueChart;
