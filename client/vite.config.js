@@ -4,20 +4,19 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: "./",
   server: {
-    host: "0.0.0.0",
+    host: true,
     port: 5173,
     strictPort: true,
-    allowedHosts: ["book-store-production-9863.up.railway.app"], // Thêm host vào danh sách cho phép
-    cors: true, // Cho phép CORS nếu cần
+    allowedHosts: ["book-store-production-9863.up.railway.app"],
     hmr: {
-      protocol: "wss",
-      host: "book-store-production-9863.up.railway.app",
-      clientPort: 443, // Đảm bảo WebSocket chạy trên cổng HTTPS
+      clientPort: 443, // Fix lỗi WebSocket
     },
   },
-  build: {
-    outDir: "dist",
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "esnext", // Sửa lỗi không tương thích
+    },
   },
-  base: "/",
 });
