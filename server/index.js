@@ -75,29 +75,33 @@ const port = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:5173",
   "https://book-store-gilt-seven.vercel.app",
-  "https://book-store-ylxg.vercel.app",
 ];
 
 // Middleware CORS
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
+app.use(
+  cors((req, res, next) => {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    res.setHeader("Access-Control-Allow-Credentials", "true");
 
-  // Xử lý request OPTIONS
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
-  }
+    // Xử lý request OPTIONS
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(204);
+    }
 
-  next();
-});
+    next();
+  })
+);
 
 // Routes
 const bookRoutes = require("./src/books/book.route");
