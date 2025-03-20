@@ -23,11 +23,20 @@ const orderRoutes = require("./src/orders/order.route");
 const userRoutes = require("./src/users/user.route");
 const adminRoutes = require("./src/stats/admin.stats");
 const revenueRoutes = require("./src/stats/revenue.stats");
+const cors = require("cors");
 app.use("/api/books", bookRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/revenue", revenueRoutes);
+// Middleware CORS
+app.use(
+  cors({
+    origin: ["https://book-store-nu-drab.vercel.app"], // URL client deploy trên Vercel
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Nếu cần gửi cookie hoặc authentication
+  })
+);
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
   app.get("/", (req, res) => {
