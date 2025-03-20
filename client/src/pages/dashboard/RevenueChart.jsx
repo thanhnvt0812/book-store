@@ -31,7 +31,9 @@ const RevenueChart = () => {
   useEffect(() => {
     const fetchRevenueData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/revenue"); // API backend
+        const response = await axios.get(
+          `${import.meta.env.VITE_LOCAL_URL}/api/revenue`
+        ); // API backend
         const { labels, revenueData } = response.data;
 
         setChartData({
