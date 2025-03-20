@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "index.js",
-      "use": "@vercel/node"
+      "use": "https://book-store-ylxg.vercel.app/api/$1"
     }
   ],
   "routes": [
