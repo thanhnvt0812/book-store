@@ -29,14 +29,16 @@ app.use("/api/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/revenue", revenueRoutes);
 // Sử dụng middleware CORS ngay từ đầu trước khi khai báo các route khác
-app.use(
-  cors({
-    origin: "*", // Mở rộng cho mọi origin. Nếu cần bảo mật hơn, hãy giới hạn cụ thể
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Nếu cần gửi cookie hoặc token
-  })
-);
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://book-store-nu-drab.vercel.app"
+  ); // Domain client trên Vercel
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 app.use(express.json()); // Đảm bảo có middleware xử lý JSON
 
