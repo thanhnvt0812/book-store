@@ -32,7 +32,7 @@ app.use("/api/revenue", revenueRoutes);
 app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "https://book-store-nu-drab.vercel.app"
+    "https://book-store-ylxg.vercel.app"
   ); // Domain client trên Vercel
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");

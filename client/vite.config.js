@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://book-store-production-a99c.up.railway.app",
+        target: "https://book-store-ylxg.vercel.app",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
