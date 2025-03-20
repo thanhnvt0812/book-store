@@ -7,4 +7,13 @@ export default defineConfig({
   build: {
     outDir: "dist", // Đảm bảo output directory là 'dist'
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://book-store-production-a99c.up.railway.app",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
