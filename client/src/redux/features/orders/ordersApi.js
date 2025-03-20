@@ -3,8 +3,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const ordersApi = createApi({
   reducerPath: "ordersApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_LOCAL_URL}/api/orders`,
+    baseUrl: `https://cors-anywhere.herokuapp.com/${
+      import.meta.env.VITE_LOCAL_URL
+    }/api/orders`,
     credentials: "include",
+    mode: "no-cors",
   }),
   tagTypes: ["Orders"],
   endpoints: (builder) => ({
