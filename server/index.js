@@ -28,14 +28,18 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/revenue", revenueRoutes);
-// Middleware CORS
+// Sử dụng middleware CORS ngay từ đầu trước khi khai báo các route khác
 app.use(
   cors({
-    origin: ["https://book-store-nu-drab.vercel.app"], // URL client deploy trên Vercel
+    origin: "*", // Mở rộng cho mọi origin. Nếu cần bảo mật hơn, hãy giới hạn cụ thể
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // Nếu cần gửi cookie hoặc authentication
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // Nếu cần gửi cookie hoặc token
   })
 );
+
+app.use(express.json()); // Đảm bảo có middleware xử lý JSON
+
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
   app.get("/", (req, res) => {
