@@ -4,11 +4,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const booksApi = createApi({
   reducerPath: "booksApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://cors-anywhere.herokuapp.com/${
-      import.meta.env.VITE_LOCAL_URL
-    }/api/books`,
+    baseUrl: `${import.meta.env.VITE_LOCAL_URL}/api/books`,
     credentials: "include",
-    mode: "no-cors",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {

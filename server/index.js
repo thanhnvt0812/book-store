@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://book-store-gilt-seven.vercel.app/",
+      "https://book-store-gilt-seven.vercel.app",
     ],
     credentials: true,
   })
@@ -29,12 +29,6 @@ app.use("/api/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/revenue", revenueRoutes);
 
-app.use(
-  cors({
-    origin: "https://book-store-gilt-seven.vercel.app",
-    credentials: true,
-  })
-);
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
   app.get("/", (req, res) => {
