@@ -32,7 +32,7 @@ app.use("/api/revenue", revenueRoutes);
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
-  app.get("/", (req, res) => {
+  app.get("/", cors(), (req, res) => {
     res.send("Hello World !");
   });
 
