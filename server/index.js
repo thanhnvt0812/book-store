@@ -6,17 +6,33 @@ require("dotenv").config();
 
 const port = process.env.PORT || 5000;
 // middleware
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "https://book-store-gilt-seven.vercel.app",
+//       "https://book-store-ylxg.vercel.app",
+//     ],
+//     credentials: true,
+//   })
+// );
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://book-store-gilt-seven.vercel.app",
+  "https://book-store-ylxg.vercel.app",
+];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 app.use(express.json());
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://book-store-gilt-seven.vercel.app",
-      "https://book-store-ylxg.vercel.app",
-    ],
-    credentials: true,
-  })
-);
 
 // routes
 const bookRoutes = require("./src/books/book.route");
