@@ -7,13 +7,4 @@ export default defineConfig({
   build: {
     outDir: "dist", // Đảm bảo output directory là 'dist'
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://book-store-ylxg.vercel.app",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
-  },
 });
